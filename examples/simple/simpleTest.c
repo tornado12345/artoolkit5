@@ -52,10 +52,12 @@
 
 #ifdef _WIN32
 #  include <windows.h>
+#  define _USE_MATH_DEFINES
 #endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #ifndef __APPLE__
 #  include <GL/gl.h>
 #  include <GL/glut.h>
@@ -66,10 +68,10 @@
 #include <AR/ar.h>
 #include <AR/gsub.h>
 #include <AR/video.h>
+#include <ARUtil/time.h>
 
-#define             CPARA_NAME       "../share/artoolkit-examples/Data/camera_para.dat"
-#define             VPARA_NAME       "../share/artoolkit-examples/Data/cameraSetting-%08x%08x.dat"
-#define             PATT_NAME        "../share/artoolkit-examples/Data/hiro.patt"
+#define             VPARA_NAME       "Data/cameraSetting-%08x%08x.dat"
+#define             PATT_NAME        "Data/hiro.patt"
 
 ARHandle           *arHandle;
 ARPattHandle       *arPattHandle;
@@ -267,6 +269,7 @@ static void mainLoop(void)
 
 static void   init(int argc, char *argv[])
 {
+    char           *cparam_name = NULL;
     ARParam         cparam;
     ARGViewport     viewport;
     char            vconf[512];
@@ -280,6 +283,8 @@ static void   init(int argc, char *argv[])
         for( i = 2; i < argc; i++ ) {strcat(vconf, " "); strcat(vconf,argv[i]);}
     }
 
+    arUtilChangeToResourcesDirectory(AR_UTIL_RESOURCES_DIRECTORY_BEHAVIOR_BEST, NULL);
+    
     /* open the video path */
 	ARLOGi("Using video configuration '%s'.\n", vconf);
     if( arVideoOpen( vconf ) < 0 ) exit(0);
@@ -295,9 +300,14 @@ static void   init(int argc, char *argv[])
     }
 
     /* set the initial camera parameters */
-    if( arParamLoad(CPARA_NAME, 1, &cparam) < 0 ) {
-        ARLOGe("Camera parameter load error !!\n");
-        exit(0);
+    if (cparam_name && *cparam_name) {
+        if (arParamLoad(cparam_name, 1, &cparam) < 0) {
+            ARLOGe("Camera parameter load error !!\n");
+            exit(0);
+        }
+    } else {
+        arParamClearWithFOVy(&cparam, xsize, ysize, M_PI_4); // M_PI_4 radians = 45 degrees.
+        ARLOGw("Using default camera parameters for %dx%d image size, 45 degrees vertical field-of-view.\n", xsize, ysize);
     }
     arParamChangeSize( &cparam, xsize, ysize, &cparam );
     ARLOG("*** Camera Parameter ***\n");

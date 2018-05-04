@@ -114,7 +114,7 @@ static int                  initialization_extraction_level = -1;
 static int                  background = 0;
 static char                 logfile[MAXPATHLEN] = "";
 static char                 exitcodefile[MAXPATHLEN] = "";
-static char                 exitcode = 255;
+static char                 exitcode = -1;
 #define EXIT(c) {exitcode=c;exit(c);}
 
 
@@ -584,7 +584,7 @@ static void usage( char *com )
         ARLOG("    -max_dpi=<max_dpi>\n");
         ARLOG("    -min_dpi=<min_dpi>\n");
         ARLOG("    -background\n");
-        ARLOG("         Run in background, i.e. as daemon detached from controlling terminal. (Mac OS X and Linux only.)\n");
+        ARLOG("         Run in background, i.e. as daemon detached from controlling terminal. (macOS and Linux only.)\n");
         ARLOG("    -log=<path>\n");
         ARLOG("    -loglevel=x\n");
         ARLOG("         x is one of: DEBUG, INFO, WARN, ERROR. Default is %s.\n", (AR_LOG_LEVEL_DEFAULT == AR_LOG_LEVEL_DEBUG ? "DEBUG" : (AR_LOG_LEVEL_DEFAULT == AR_LOG_LEVEL_INFO ? "INFO" : (AR_LOG_LEVEL_DEFAULT == AR_LOG_LEVEL_WARN ? "WARN" : (AR_LOG_LEVEL_DEFAULT == AR_LOG_LEVEL_ERROR ? "ERROR" : "UNKNOWN")))));

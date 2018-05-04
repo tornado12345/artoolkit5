@@ -57,18 +57,20 @@
 #ifndef __APPLE__
 #  ifdef _WIN32
 #    include <windows.h>
+#    define _USE_MATH_DEFINES
 #  endif
 #  include <GL/glut.h>
 #else
 #  include <GLUT/glut.h>
 #endif
+#include <math.h>
 #include <AR/ar.h>
 #include <AR/gsub.h>
 #include <AR/video.h>
 #include <AR/arMulti.h>
+#include <ARUtil/time.h>
 
-#define                 CPARA_NAME       "../share/artoolkit-examples/Data/camera_para.dat"
-#define                 CONFIG_NAME      "../share/artoolkit-examples/Data/multi/marker.dat"
+#define                 CONFIG_NAME      "Data/multi/marker.dat"
 
 ARHandle               *arHandle;
 AR3DHandle             *ar3DHandle;
@@ -224,6 +226,7 @@ static void mainLoop(void)
 
 static void   init(int argc, char *argv[])
 {
+    char           *cparam_name = NULL;
     ARParam         cparam;
     ARGViewport     viewport;
     ARPattHandle   *arPattHandle;
@@ -246,6 +249,8 @@ static void   init(int argc, char *argv[])
     }
     if( configName[0] == '\0' ) strcpy(configName, CONFIG_NAME);
 
+    arUtilChangeToResourcesDirectory(AR_UTIL_RESOURCES_DIRECTORY_BEHAVIOR_BEST, NULL);
+    
     /* open the video path */
     if( arVideoOpen( vconf ) < 0 ) exit(0);
     /* find the size of the window */
@@ -254,9 +259,14 @@ static void   init(int argc, char *argv[])
     if( (pixFormat=arVideoGetPixelFormat()) < 0 ) exit(0);
 
     /* set the initial camera parameters */
-    if( arParamLoad(CPARA_NAME, 1, &cparam) < 0 ) {
-        ARLOGe("Camera parameter load error !!\n");
-        exit(0);
+    if (cparam_name && *cparam_name) {
+        if (arParamLoad(cparam_name, 1, &cparam) < 0) {
+            ARLOGe("Camera parameter load error !!\n");
+            exit(0);
+        }
+    } else {
+        arParamClearWithFOVy(&cparam, xsize, ysize, M_PI_4); // M_PI_4 radians = 45 degrees.
+        ARLOGw("Using default camera parameters for %dx%d image size, 45 degrees vertical field-of-view.\n", xsize, ysize);
     }
     arParamChangeSize( &cparam, xsize, ysize, &cparam );
     ARLOG("*** Camera Parameter ***\n");

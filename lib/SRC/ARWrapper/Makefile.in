@@ -46,7 +46,7 @@ CPPFLAGS = $(AR_CPPFLAGS)
 CFLAGS = @CFLAG@
 CXXFLAGS = @CFLAG@
 LDFLAGS = $(AR_LDFLAGS) @LDFLAG@
-LIBS= -lARgsub_lite -lARvideo -lAR -lARICP -lAR2 -lKPM $(STDCXXLIB) -lARUtil -lARMulti -lEden -lAR @LIBS@
+LIBS= -lARgsub_lite -lARvideo -lAR -lARICP -lAR2 -lKPM $(STDCXXLIB) -lARMulti -lEden -lAR -lARUtil @LIBS@
 AR=@AR@
 ARFLAGS=@ARFLAGS@
 RANLIB = @RANLIB@
@@ -59,18 +59,15 @@ trackingSub.h \
 
 OBJS = \
 AndroidFeatures.o \
-AndroidVideoSource.o \
 ARController.o \
 ARMarker.o \
 ARMarkerMulti.o \
 ARMarkerNFT.o \
 ARMarkerSquare.o \
 ARPattern.o \
-ARToolKitVideoSource.o \
+ARVideoSource.o \
 ARToolKitWrapperExportedAPI.o \
-ColorConversion.o \
 trackingSub.o \
-VideoSource.o \
 
 # Implicit rule, to compile C++ files with the .cpp suffix (rule already exists for .cc).
 %.o : %.cpp

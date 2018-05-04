@@ -33,6 +33,22 @@ Name: docs; Description: "Documentation for ARToolKit"; Types: full custom
 
 [InstallDelete]
 ; Here we remove obsolete files from earlier versions.
+; Removed from 5.4, or moved.
+Type: filesandordirs; Name: "{app}\DSVL\"
+Type: files; Name: "{app}\bin\DSVL.dll"
+Type: files; Name: "{app}\bin\DSVLd.dll"
+Type: files; Name: "{app}\bin64\DSVL.dll"
+Type: files; Name: "{app}\bin64\DSVLd.dll"
+Type: files; Name: "{app}\include\win32-i386\qedit.h"
+Type: files; Name: "{app}\include\win64-x64\qedit.h"
+Type: filesandordirs; Name: "{app}\include\AR\sys\"
+Type: filesandordirs; Name: "{app}\lib\SRC\VideoWinDummy\"
+Type: filesandordirs; Name: "{app}\lib\SRC\VideoWinImage\"
+Type: filesandordirs; Name: "{app}\lib\SRC\VideoWinDF\"
+Type: filesandordirs; Name: "{app}\lib\SRC\VideoWinDS\"
+Type: filesandordirs; Name: "{app}\lib\SRC\VideoWinDSVL\"
+Type: filesandordirs; Name: "{app}\lib\SRC\VideoWinMF\"
+Type: filesandordirs; Name: "{app}\lib\SRC\VideoQuickTime\"
 ; Removed from 5.3.3
 Type: files; Name: "{app}\VisualStudio\vs120\ARvrml.vcxproj"
 Type: files; Name: "{app}\VisualStudio\vs120\simpleVRML.vcxproj"
@@ -103,8 +119,7 @@ Source: "include\AR2\*"; Components: dev; DestDir: "{app}\include\AR2"; Flags: r
 Source: "include\KPM\*"; Components: dev; DestDir: "{app}\include\KPM"; Flags: recursesubdirs ignoreversion
 Source: "include\ARWrapper\*"; Components: dev; DestDir: "{app}\include\ARWrapper"; Flags: recursesubdirs ignoreversion
 Source: "include\Eden\*"; Components: dev; DestDir: "{app}\include\Eden"; Flags: recursesubdirs ignoreversion
-Source: "include\profile.h"; Components: dev; DestDir: "{app}\include"; Flags: ignoreversion
-Source: "include\thread_sub.h"; Components: dev; DestDir: "{app}\include"; Flags: ignoreversion
+Source: "include\ARUtil\*"; Components: dev; DestDir: "{app}\include\ARUtil"; Flags: recursesubdirs ignoreversion
 Source: "include\glStateCache.h"; Components: dev; DestDir: "{app}\include"; Flags: ignoreversion
 Source: "include\glStateCache2.h"; Components: dev; DestDir: "{app}\include"; Flags: ignoreversion
 Source: "include\win32-i386\stdint.h"; Components: dev; DestDir: "{app}\include\win32-i386"; Flags: ignoreversion
@@ -125,10 +140,6 @@ Source: "bin\ARWrapper*.dll"; Components: dev; DestDir: "{app}\bin"; Flags: igno
 Source: "bin64\ARWrapper*.dll"; Components: dev; DestDir: "{app}\bin64"; Flags: ignoreversion
 Source: "bin\pthreadVC2.dll"; Components: dev; DestDir: "{app}\bin"; Flags: ignoreversion
 Source: "bin64\pthreadVC2.dll"; Components: dev; DestDir: "{app}\bin64"; Flags: ignoreversion
-Source: "bin\DSVL.dll"; Components: dev; DestDir: "{app}\bin"; Flags: ignoreversion
-Source: "bin\DSVLd.dll"; Components: dev; DestDir: "{app}\bin"; Flags: ignoreversion
-Source: "bin64\DSVL.dll"; Components: dev; DestDir: "{app}\bin64"; Flags: ignoreversion
-Source: "bin64\DSVLd.dll"; Components: dev; DestDir: "{app}\bin64"; Flags: ignoreversion
 Source: "include\win32-i386\GL\glut.h"; Components: dev; DestDir: "{app}\include\win32-i386\GL"; Flags: ignoreversion
 Source: "include\win64-x64\GL\glut.h"; Components: dev; DestDir: "{app}\include\win64-x64\GL"; Flags: ignoreversion
 Source: "lib\win32-i386\glut32.lib"; Components: dev; DestDir: "{app}\lib\win32-i386"; Flags: ignoreversion
@@ -176,7 +187,7 @@ Source: "lib\SRC\ARICP\*"; Excludes: "Makefile.in"; Components: dev and src; Des
 Source: "lib\SRC\ARMulti\*"; Excludes: "Makefile.in"; Components: dev and src; DestDir: "{app}\lib\SRC\ARMulti"; Flags: recursesubdirs ignoreversion
 Source: "lib\SRC\AR2\*"; Excludes: "Makefile.in"; Components: dev and src; DestDir: "{app}\lib\SRC\AR2"; Flags: recursesubdirs ignoreversion
 Source: "lib\SRC\KPM\*"; Excludes: "Makefile.in"; Components: dev and src; DestDir: "{app}\lib\SRC\KPM"; Flags: recursesubdirs ignoreversion
-Source: "lib\SRC\Util\*"; Excludes: "Makefile.in"; Components: dev and src; DestDir: "{app}\lib\SRC\Util"; Flags: recursesubdirs ignoreversion
+Source: "lib\SRC\ARUtil\*"; Excludes: "Makefile.in"; Components: dev and src; DestDir: "{app}\lib\SRC\ARUtil"; Flags: recursesubdirs ignoreversion
 Source: "lib\SRC\ARosg\*"; Excludes: "Makefile.in"; Components: dev and src; DestDir: "{app}\lib\SRC\ARosg"; Flags: recursesubdirs ignoreversion
 Source: "lib\SRC\ARWrapper\*"; Excludes: "Makefile.in"; Components: dev and src; DestDir: "{app}\lib\SRC\ARWrapper"; Flags: recursesubdirs ignoreversion
 Source: "lib\SRC\Eden\*"; Excludes: "Makefile.in"; Components: dev and src; DestDir: "{app}\lib\SRC\Eden"; Flags: recursesubdirs ignoreversion
@@ -191,24 +202,12 @@ Source: "lib\SRC\Gl\gsub_lite.c"; Components: dev and src; DestDir: "{app}\lib\S
 Source: "lib\SRC\Gl\gsub_mtx.c"; Components: dev and src; DestDir: "{app}\lib\SRC\Gl"; Flags: ignoreversion
 Source: "lib\SRC\Gl\gsubTest.c"; Components: dev and src; DestDir: "{app}\lib\SRC\Gl"; Flags: ignoreversion
 Source: "lib\SRC\Video\*"; Excludes: "Makefile.in"; Components: dev and src; DestDir: "{app}\lib\SRC\Video"; Flags: recursesubdirs ignoreversion
-Source: "lib\SRC\VideoDummy\*"; Excludes: "Makefile.in"; Components: dev and src; DestDir: "{app}\lib\SRC\VideoDummy"; Flags: recursesubdirs ignoreversion
-Source: "lib\SRC\VideoImage\*"; Excludes: "Makefile.in"; Components: dev and src; DestDir: "{app}\lib\SRC\VideoImage"; Flags: recursesubdirs ignoreversion
-Source: "lib\SRC\VideoWinDF\*"; Excludes: "Makefile.in"; Components: dev and src; DestDir: "{app}\lib\SRC\VideoWinDF"; Flags: recursesubdirs ignoreversion
-Source: "lib\SRC\VideoWinDS\*"; Excludes: "Makefile.in"; Components: dev and src; DestDir: "{app}\lib\SRC\VideoWinDS"; Flags: recursesubdirs ignoreversion
-Source: "lib\SRC\VideoWinDSVL\*"; Excludes: "Makefile.in"; Components: dev and src; DestDir: "{app}\lib\SRC\VideoWinDSVL"; Flags: recursesubdirs ignoreversion
-Source: "lib\SRC\VideoWinMF\*"; Excludes: "Makefile.in"; Components: dev and src; DestDir: "{app}\lib\SRC\VideoWinMF"; Flags: recursesubdirs ignoreversion
-Source: "lib\SRC\VideoQuickTime\*"; Excludes: "Makefile.in"; Components: dev and src; DestDir: "{app}\lib\SRC\VideoQuickTime"; Flags: recursesubdirs ignoreversion
 Source: "Configure-win32.*"; Components: dev and src; DestDir: "{app}"; Flags: ignoreversion
 Source: "VisualStudio\vs120\*"; Excludes: "Debug*\*,Release*\*,x64\*,ipch\*,*.ncb,*.suo,*.user,*.sdf"; Components: dev and src; DestDir: "{app}\VisualStudio\vs120"; Flags: recursesubdirs ignoreversion
 Source: "share\packaging\ARToolKit5-bin-win32-vs120*"; Components: dev and src; DestDir: "{app}\share\packaging"; Flags: ignoreversion
 ;Source: "share\*"; Excludes: "artoolkit5-config.in,artoolkit5-setenv,artoolkit5-unsetenv"; Components: dev and src; DestDir: "{app}\share"; Flags: ignoreversion
 
 ; Libraries and headers, source: external dependencies.
-; DirectShow
-Source: "include\win32-i386\qedit.h"; Components: dev and src; DestDir: "{app}\include\win32-i386"; Flags: ignoreversion
-Source: "include\win64-x64\qedit.h"; Components: dev and src; DestDir: "{app}\include\win32-i386"; Flags: ignoreversion
-; DSVideoLib
-Source: "DSVL\*"; Components: dev and src; DestDir: "{app}\DSVL"; Flags: recursesubdirs ignoreversion
 ; pthreads
 Source: "include\win32-i386\pthread.h"; Components: dev and src; DestDir: "{app}\include\win32-i386"; Flags: ignoreversion
 Source: "include\win32-i386\sched.h"; Components: dev and src; DestDir: "{app}\include\win32-i386"; Flags: ignoreversion
@@ -229,6 +228,14 @@ Source: "include\win64-x64\jmorecfg.h"; Components: dev and src; DestDir: "{app}
 Source: "include\win64-x64\jversion.h"; Components: dev and src; DestDir: "{app}\include\win64-x64"; Flags: ignoreversion
 Source: "lib\win32-i386\libjpeg.lib"; Components: dev and src; DestDir: "{app}\lib\win32-i386"; Flags: ignoreversion
 Source: "lib\win64-x64\libjpeg.lib"; Components: dev and src; DestDir: "{app}\lib\win64-x64"; Flags: ignoreversion
+; zlib
+Source: "include\win32-i386\zconf.h"; Components: dev and src; DestDir: "{app}\include\win32-i386"; Flags: ignoreversion
+Source: "include\win32-i386\zlib.h"; Components: dev and src; DestDir: "{app}\include\win32-i386"; Flags: ignoreversion
+Source: "include\win64-x64\zconf.h"; Components: dev and src; DestDir: "{app}\include\win64-x64"; Flags: ignoreversion
+Source: "include\win64-x64\zlib.h"; Components: dev and src; DestDir: "{app}\include\win64-x64"; Flags: ignoreversion
+Source: "include\win64-x64\jversion.h"; Components: dev and src; DestDir: "{app}\include\win64-x64"; Flags: ignoreversion
+Source: "lib\win32-i386\zlib.lib"; Components: dev and src; DestDir: "{app}\lib\win32-i386"; Flags: ignoreversion
+Source: "lib\win64-x64\zlib.lib"; Components: dev and src; DestDir: "{app}\lib\win64-x64"; Flags: ignoreversion
 ; OpenSceneGraph-3.2.1
 Source: "include\win32-i386\OpenThreads\*"; Components: dev and src; DestDir: "{app}\include\win32-i386\OpenThreads"; Flags: recursesubdirs ignoreversion
 Source: "include\win64-x64\OpenThreads\*"; Components: dev and src; DestDir: "{app}\include\win64-x64\OpenThreads"; Flags: recursesubdirs ignoreversion

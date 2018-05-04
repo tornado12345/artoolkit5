@@ -42,7 +42,7 @@
 
 #if HAVE_NFT
 
-#include <thread_sub.h> 
+#include <ARUtil/thread_sub.h> 
 #include <KPM/kpm.h>
 
 #ifdef __cplusplus

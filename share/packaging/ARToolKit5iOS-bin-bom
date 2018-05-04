@@ -7,8 +7,7 @@ include/AR2/
 include/KPM/
 include/ARWrapper/
 include/Eden/
-include/profile.h
-include/thread_sub.h
+include/ARUtil/
 include/glStateCache.h
 include/glStateCache2.h
 include/ios7/
@@ -48,16 +47,6 @@ lib/macosx-universal/libopencv_highgui.2.4.6.dylib
 lib/macosx-universal/libopencv_imgproc.2.4.6.dylib
 lib/macosx-universal/libopencv_features2d.2.4.6.dylib
 
-share/artoolkit-utils/Data/camera_para.dat
-share/artoolkit-examples/Data/cubeMarkerConfig.dat
-share/artoolkit-examples/Data/multi/
-share/artoolkit-examples/Data/multi-barcode-4x3.dat
-share/artoolkit-examples/Data/multi-barcode-8x6.dat
-share/artoolkit-examples/Data/hiro.patt
-share/artoolkit-examples/Data/kanji.patt
-share/artoolkit-examples/Data/sample1.patt
-share/artoolkit-examples/Data/sample2.patt
-
 lib/SRC/AR/
 lib/SRC/ARICP/
 lib/SRC/ARMulti/
@@ -69,12 +58,9 @@ lib/SRC/Gl/gsub_es.c
 lib/SRC/Gl/gsub_es2.c
 lib/SRC/Gl/gsub_mtx.c
 lib/SRC/Video/
-lib/SRC/VideoDummy/
-lib/SRC/VideoImage/
-lib/SRC/VideoiPhone/
 lib/SRC/AR2/
 lib/SRC/KPM/
-lib/SRC/Util/
+lib/SRC/ARUtil/
 lib/SRC/Eden/
 
 examples/ARAppCore/
